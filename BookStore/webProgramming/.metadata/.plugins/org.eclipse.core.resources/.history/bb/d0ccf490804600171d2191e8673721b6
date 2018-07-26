@@ -1,0 +1,67 @@
+
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>REGISTER GUEST</title>
+</head>
+<body>
+
+registering..
+
+
+<% 
+
+Connection conn = null;
+PreparedStatement pstmt = null;
+ResultSet rs = null;
+
+/*  내가 추가한 코드 들  */
+
+String ID=request.getParameter("ID");
+String password = request.getParameter("password");
+String name =request.getParameter("name");
+String phone=request.getParameter("phone");
+String address = request.getParameter("address");
+/*  내가 추가한 코드 들  */
+
+
+
+out.println("name: " + name +"<br>");
+out.println("ID: " + ID +"<br>");
+%>
+
+phase 1
+
+<% 
+Class.forName("com.mysql.jdbc.Driver");
+String url="jdbc:mysql://localhost:3306/bookstore";
+conn=DriverManager.getConnection(url,"root","0000");
+
+String sql="INSERT INTO `bookstore`.`customer` (`ID`, `password`, `name`, `phone`, `address`, `authorization`, `basket_basketID`) VALUES ('?', '?', '?', '?', '?', '0', '10002')";
+pstmt=conn.prepareStatement(sql);
+
+pstmt.setString(0, ID);
+pstmt.setString(1, password);
+pstmt.setString(2, name);
+pstmt.setString(3, phone);
+//pstmt.setString(4, address);
+
+rs=pstmt.executeQuery(sql);
+%>
+WELCOME!!
+
+
+
+
+</body>
+</html>
